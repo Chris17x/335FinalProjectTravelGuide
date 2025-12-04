@@ -17,10 +17,9 @@ app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "templates"));
 process.stdin.setEncoding("utf8"); /* encoding */
 
-/* Ensure one extra arg. Use 2 since node is 0 and app is 1
-   We should probably exit if going further would yield errors */
+/* Ensure proper usage */
 const args = process.argv.slice(2);
-if (args.length !== 1) {
+if (args.length !== 0) {
     console.log("Usage: travelGuideServer.js");
     process.exit(1);
 } 
