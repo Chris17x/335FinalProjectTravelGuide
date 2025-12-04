@@ -1,12 +1,14 @@
 /* Imports */
 const express = require("express");
+const portNumber = 7000;
 const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
 const fs = require("fs");
-require("dotenv").config({
-   path: path.resolve(__dirname, "credentialsDontPost/.env"),
-});
+// Do not need this for deployment. May be used for local testing.
+// require("dotenv").config({
+//    path: path.resolve(__dirname, "credentialsDontPost/.env"),
+// });
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
 /* Setup some of the tools -- WILL NEED MORE*/
@@ -29,34 +31,39 @@ app.get("/", (request, response) => {
     response.render('index');
 });
 
-/* City Add */
-app.get("/", (request, response) => { 
-    
+/* City Add
+    Form page to add city info */
+app.get("/addCity", (request, response) => { 
+    response.render('addCity');  
 });
 
-/* City Add Confirmation */
-app.post("/", async (request, response) => { 
-     
+/* City Add Confirmation
+    Take info from city add's form, echo the info,
+    and use mongoose to add it to DB */
+app.post("/addProcess", async (request, response) => { 
+    response.render('addCityConfirmation');  
 });
 
-/* City List */
-app.get("/", (request, response) => { 
-    
+/* City List
+    Create a table of the cities and render the page
+    with that table variable */
+app.get("/cityList", (request, response) => { 
+    response.render('cityList');   
 });
 
-/* City List Post */
-app.post("/", async (request, response) => { 
-   
+
+/* Specific Info By City 
+    Show a form to show a city*/
+app.get("/cityInfo", (request, response) => { 
+    response.render('viewCity');  
 });
 
-/* Specific Info By City */
-app.get("/", (request, response) => { 
-
-});
-
-/* Info By City Post */
-app.post("/", async (request, response) => { 
-    
+/* Info By City Post 
+    Take info from city info's form and fetch from DB
+    using mongoose, including an API call and displaying
+    that information with the template using template vars*/
+app.post("/infoProcess", async (request, response) => { 
+    response.render('viewCityResponse');  
 });
 
 
