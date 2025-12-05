@@ -1,0 +1,71 @@
+<!-- samhitha -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add a City – Travel Guide</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Add a City to Your Travel Guide</h1>
+    <p>
+      Use this page to add a new city to the travel guide. 
+      Enter the city’s basic location information and some notes about what to do, what to avoid, and any tips.
+    </p>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/cities">View All Cities</a>
+    </nav>
+    <hr>
+  </header>
+
+  <main>
+    <form action="/addCity" method="POST">
+      <!-- LOCATION INFO FIELDSET -->
+      <fieldset>
+        <legend>Location Information</legend>
+
+        <label for="cityName">City Name:</label><br>
+        <input type="text" id="cityName" name="cityName" required><br><br>
+
+        <label for="country">Country:</label><br>
+        <input type="text" id="country" name="country"><br><br>
+
+        <label for="latitude">Latitude (for API):</label><br>
+        <input type="number" id="latitude" name="latitude" step="0.0001" required><br><br>
+
+        <label for="longitude">Longitude (for API):</label><br>
+        <input type="number" id="longitude" name="longitude" step="0.0001" required><br><br>
+      </fieldset>
+
+      <br>
+
+      <!-- TRAVEL GUIDE INFO FIELDSET -->
+      <fieldset>
+        <legend>Travel Guide Information</legend>
+
+        <label for="funThings">Fun Things to Do:</label><br>
+        <textarea id="funThings" name="funThings" rows="4" cols="50"
+          placeholder="List places to visit, food to try, sights to see..."></textarea><br><br>
+
+        <label for="warnings">Warnings / Advice:</label><br>
+        <textarea id="warnings" name="warnings" rows="3" cols="50"
+          placeholder="Any safety tips, areas to avoid, local customs, etc."></textarea><br><br>
+
+        <label for="comments">Additional Comments:</label><br>
+        <textarea id="comments" name="comments" rows="3" cols="50"
+          placeholder="Any other notes for future travelers."></textarea><br><br>
+      </fieldset>
+
+      <br>
+
+      <button type="submit">Submit City</button>
+      <button type="reset">Clear Form</button>
+    </form>
+
+    <br>
+    <a href="/">Back to Home</a>
+  </main>
+</body>
+</html>
