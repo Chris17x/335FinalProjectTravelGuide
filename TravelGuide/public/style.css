@@ -1,0 +1,11 @@
+/* HTML Selectors */
+body {
+    font-family: "Ubuntu", Helvetica, sans-serif;
+	font-size: 110%;
+    background-color: beige;
+}
+
+
+a {
+    color: red; 
+}

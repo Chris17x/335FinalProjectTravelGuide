@@ -22,6 +22,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "templates"));
 process.stdin.setEncoding("utf8"); /* encoding */
+/* Adds the CSS as a resource */
+app.use(express.static('public'));
 
 /* Ensure proper usage */
 const args = process.argv.slice(2);
