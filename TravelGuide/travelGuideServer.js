@@ -46,7 +46,9 @@ app.get("/addCity", (request, response) => {
     Take info from city add's form, echo the info,
     and use mongoose to add it to DB */
 app.post("/addProcess", async (request, response) => { 
-    response.render('addCityConfirmation');  
+    const { name, lat, lon } = request.body; //add the other fields (and in ./model/City.js)
+    await insertCity(name, lat, lon); //add the other fields (and in ./model/City.js)
+    response.render('addCityConfirmation', { name, lat, lon });  //add the other fields (and in ./model/City.js)
 });
 
 /* City List
@@ -88,6 +90,9 @@ app.get("/cityInfo", (request, response) => {
     using mongoose, including an API call and displaying
     that information with the template using template vars*/
 app.post("/infoProcess", async (request, response) => { 
+    const { name } = request.body; 
+    const result = await findCity(name);
+    const weatherReport = await fetchWeather(lat, lon); //must define lat and lon from result
     response.render('viewCityResponse');  
 });
 
@@ -115,57 +120,51 @@ app.listen(portNumber, () => {
     process.stdout.write('Stop to shutdown the server: ');
 });
 
+/* Begin Mongoose */
 
-
-
-/* MONGOOSE GOES HERE */
-// Example usage
-
-// (async () => {
-//    try {
-//       await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
-//      The below commands have had the name of the mongoose db changed
-//      to ours to demonstrate the further changes we'd do. Also, change the fields.
-//       await City.create({
-//          title: "The Train",
-//          awards: 3,
-//          released: new Date(),
-//          grammyWinner: false
-//       });
-//       await City.create({
-//          title: "Parking",
-//          awards: 100
-//       });
-//       await City.create({
-//          title: "The Laptop",
-//          oscars: 5
-//       });
-
-//       /* Retrieving all songs */
-//       const songs = await Song.find({});
-//       console.log("Songs\n", songs);
-
-//       /* Retrieving all movies */
-//       const movies = await Movie.find({});
-//       console.log("Movies\n", movies);
-
-//       mongoose.disconnect();
-//    } catch (err) {
-//       console.error(err);
-//    }
-// })();
-
-
-async function listCities() {
-    let cities = null;
+/* Add a city */
+async function insertCity(name, lat, lon) { //add the other fields (and in ./model/City.js)
     try {
-      await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
-      /* Retrieving all cities */
-      cities = await City.find({});
-      mongoose.disconnect();
-   } catch (err) {
-      console.error(err);
-   }
+        await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
+        await City.create({
+            name: name,
+            lat: lat,
+            lon: lon
+        });
+    } catch (err) {
+        console.error(err);
+    } finally {
+        await mongoose.disconnect(); 
+    }
+}
 
-   return cities;
+/* Return cities */
+async function listCities() {
+    try {
+        await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
+        let cities = await City.find({});
+        return cities ? cities : null;
+   } catch (err) {
+        console.error(err);
+   } finally {
+        await mongoose.disconnect(); 
+    }
+}
+
+/* Find a city */
+async function findCity(name) {
+    try {
+        await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
+        let result = await City.find({ name: name });
+        return result ? result : null;
+   } catch (err) {
+        console.error(err);
+   } finally {
+        await mongoose.disconnect(); 
+    }
+}
+
+/* Find the weather report for a lat x lon */
+async function fetchWeather(lat, lon) {
+    /* Implement me. Make api call */
 }
