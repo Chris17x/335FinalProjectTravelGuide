@@ -1,29 +1,33 @@
 const mongoose = require("mongoose");
 
 const citiesSchema = new mongoose.Schema({
-   name: {
+   cityName: {
       type: String,
       required: true
    },
-   lat: {
+   country: {
+      type: String,
+      required: true
+   },
+   latitude: {
       type: Number,
       required: true
    },
-   lon: {
+   longitude: {
       type: Number,
       required: true
    },
-   extraFieldA: {
+   funThings: {
       type: String,
-      required: true
+      required: false
    },
-   extraFieldB: {
+   warnings: {
       type: String,
-      required: true
+      required: false
    },
-   extraFieldC: {
+   comments: {
       type: String,
-      required: true
+      required: false
    },
 });
 

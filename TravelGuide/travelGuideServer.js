@@ -15,6 +15,13 @@ const mongoose = require("mongoose");
 // Include the City schema
 const City = require("./model/City.js");
 
+// Include Mongo Functions
+const { insertCity } = require("./modules/insertCity.js");
+const { listCities } = require("./modules/listCities.js");
+const { findCity } = require("./modules/findCity.js");
+
+// Include API function
+const { fetchWeather } = require("./modules/fetchWeather.js");
 
 
 /* Setup some of the tools -- WILL NEED MORE*/
@@ -48,9 +55,9 @@ app.get("/addCity", (request, response) => {
     Take info from city add's form, echo the info,
     and use mongoose to add it to DB */
 app.post("/addProcess", async (request, response) => { 
-    const { name, lat, lon } = request.body; //add the other fields (and in ./model/City.js)
-    await insertCity(name, lat, lon); //add the other fields (and in ./model/City.js)
-    response.render('addCityConfirmation', { name, lat, lon });  //add the other fields (and in ./model/City.js)
+    const { cityName, country, latitude, longitude, funThings, warnings, comments} = request.body; 
+    await insertCity(cityName, country, latitude, longitude, funThings, warnings, comments); 
+    response.render('addCityConfirmation', { cityName, country, latitiude, longitude, funThings, warnings, comments });  
 });
 
 /* City List
@@ -70,9 +77,9 @@ app.get("/cityList", async (request, response) => {
     for (const cit of arr) {
         displayTable += `
             <tr>
-                <td style="border: 1px solid black; padding: 2px;">${cit.name || "None"}</td>
-                <td style="border: 1px solid black; padding: 2px;">${cit.lat || "None"}</td>
-                <td style="border: 1px solid black; padding: 2px;">${cit.lon || "None"}</td>
+                <td style="border: 1px solid black; padding: 2px;">${cit.cityName || "None"}</td>
+                <td style="border: 1px solid black; padding: 2px;">${cit.latitiude || "None"}</td>
+                <td style="border: 1px solid black; padding: 2px;">${cit.longitude || "None"}</td>
             </tr>
         `;
     }
@@ -121,52 +128,3 @@ app.listen(portNumber, () => {
     console.log(`Web server started and running at http://localhost:${portNumber}`);
     process.stdout.write('Stop to shutdown the server: ');
 });
-
-/* Begin Mongoose */
-
-/* Add a city */
-async function insertCity(name, lat, lon) { //add the other fields (and in ./model/City.js)
-    try {
-        await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
-        await City.create({
-            name: name,
-            lat: lat,
-            lon: lon
-        });
-    } catch (err) {
-        console.error(err);
-    } finally {
-        await mongoose.disconnect(); 
-    }
-}
-
-/* Return cities */
-async function listCities() {
-    try {
-        await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
-        let cities = await City.find({});
-        return cities ? cities : null;
-   } catch (err) {
-        console.error(err);
-   } finally {
-        await mongoose.disconnect(); 
-    }
-}
-
-/* Find a city */
-async function findCity(name) {
-    try {
-        await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
-        let result = await City.find({ name: name });
-        return result ? result : null;
-   } catch (err) {
-        console.error(err);
-   } finally {
-        await mongoose.disconnect(); 
-    }
-}
-
-/* Find the weather report for a lat x lon */
-async function fetchWeather(lat, lon) {
-    /* Implement me. Make api call */
-}
