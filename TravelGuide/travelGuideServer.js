@@ -55,12 +55,14 @@ app.get("/addCity", (request, response) => {
     Take info from city add's form, echo the info,
     and use mongoose to add it to DB */
 app.post("/addProcess", async (request, response) => { 
-    const { cityName, country, latitude, longitude, funThings, warnings, comments} = request.body; 
+    const city = request.body;
+    const { cityName, country, latitude, longitude, funThings, warnings, comments} = city; 
     // Try to update the content - if the find for city fails then we return false and go to insert
-    if (!(await updateCity(cityName, country, latitude, longitude, funThings, warnings, comments))) {
+    const updated = await updateCity(cityName, country, latitude, longitude, funThings, warnings, comments)
+    if (!updated) {
         await insertCity(cityName, country, latitude, longitude, funThings, warnings, comments); 
     }
-    response.render('addCityConfirmation', { cityName, country, latitiude, longitude, funThings, warnings, comments });  
+    response.render('addCityConfirmation', { city });  
 });
 
 /* City List

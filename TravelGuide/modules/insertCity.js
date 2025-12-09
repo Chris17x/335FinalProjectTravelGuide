@@ -32,12 +32,14 @@ async function updateCity(cityName_in, country_in, latitude_in, longitude_in, fu
             const options = { new:true };
            
             await City.findOneAndUpdate(filter, update, options);
+            return true;
         } else {
             return false;
         }
         
     } catch (err) {
         console.error(err);
+        return false; 
     }
 }
 
