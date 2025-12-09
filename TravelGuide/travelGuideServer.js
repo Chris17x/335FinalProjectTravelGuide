@@ -104,8 +104,14 @@ app.get("/cityInfo", (request, response) => {
 app.post("/infoProcess", async (request, response) => { 
     const { name } = request.body; 
     const result = await findCity(name);
-    const weatherReport = await fetchWeather(lat, lon); //must define lat and lon from result
-    response.render('viewCityResponse');  
+    if (result) {
+        const lat = result.latitiude;
+        const lon = result.longitude;
+        const weatherReport = await fetchWeather(lat, lon); 
+        response.render('viewCityResponse', { result, weatherReport });
+    } else {
+        response.render('viewCityResponseFailed', { name });
+    }
 });
 
 
