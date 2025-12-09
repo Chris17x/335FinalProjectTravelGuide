@@ -3,7 +3,7 @@ const City = require("../model/City.js");
 async function findCity(cityName) {
     try {
         let result = await City.find({ cityName: cityName });
-        return result ? result : null;
+        return result;
    } catch (err) {
         console.error(err);
    }

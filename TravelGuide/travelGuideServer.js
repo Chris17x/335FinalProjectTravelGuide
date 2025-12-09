@@ -104,15 +104,14 @@ app.get("/cityInfo", (request, response) => {
     using mongoose, including an API call and displaying
     that information with the template using template vars*/
 app.post("/infoProcess", async (request, response) => { 
-    const { name } = request.body; 
-    const result = await findCity(name);
-    if (result) {
-        const lat = result.latitiude;
-        const lon = result.longitude;
-        const weatherReport = await fetchWeather(lat, lon); 
-        response.render('viewCityResponse', { result, weatherReport });
+    const { cityName } = request.body; 
+    const result = await findCity(cityName);
+    if (result.length > 0) {
+        const target = result[0];
+        const weatherReport = 2; 
+        response.render('viewCityResponse', { target, weatherReport });
     } else {
-        response.render('viewCityResponseFailed', { name });
+        response.render('viewCityResponseFailed', { cityName });
     }
 });
 
