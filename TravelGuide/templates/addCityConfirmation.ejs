@@ -1,2 +1,50 @@
-<!-- samhitha
-project 5 echoing info from form -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>City Added – Confirmation</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <header>
+    <h1>City Added Successfully</h1>
+    <p>Below is the information you entered for this city.</p>
+
+    <nav>
+      <a href="/">Home</a>
+      <a href="/addCity">Add Another City</a>
+      <a href="/cities">View All Cities</a>
+    </nav>
+    <hr>
+  </header>
+
+  <main>
+    <% if (city) { %>
+
+      <h2><%= city.cityName %> <%= city.country ? ", " + city.country : "" %></h2>
+
+      <h3>Location Information</h3>
+      <ul>
+        <li><strong>City Name:</strong> <%= city.cityName %></li>
+        <li><strong>Country:</strong> <%= city.country || "N/A" %></li>
+        <li><strong>Latitude:</strong> <%= city.latitude %></li>
+        <li><strong>Longitude:</strong> <%= city.longitude %></li>
+      </ul>
+
+      <h3>Travel Guide Information</h3>
+      <ul>
+        <li><strong>Fun Things to Do:</strong> <%= city.funThings || "None provided" %></li>
+        <li><strong>Warnings / Advice:</strong> <%= city.warnings || "None provided" %></li>
+        <li><strong>Additional Comments:</strong> <%= city.comments || "None provided" %></li>
+      </ul>
+
+    <% } else { %>
+      <p>No city data was found.</p>
+    <% } %>
+
+    <br>
+    <a href="/">Back to Home</a>
+  </main>
+</body>
+</html>
