@@ -9,3 +9,11 @@ body {
 a {
     color: red; 
 }
+
+table {
+    border: 2px double black; 
+}
+
+th, td {
+    border: 2px black;
+}
