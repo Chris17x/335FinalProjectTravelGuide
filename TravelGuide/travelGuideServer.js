@@ -83,7 +83,7 @@ app.get("/cityList", async (request, response) => {
         displayTable += `
             <tr>
                 <td style="border: 1px solid black; padding: 2px;">${cit.cityName || "None"}</td>
-                <td style="border: 1px solid black; padding: 2px;">${cit.latitiude || "None"}</td>
+                <td style="border: 1px solid black; padding: 2px;">${cit.latitude || "None"}</td>
                 <td style="border: 1px solid black; padding: 2px;">${cit.longitude || "None"}</td>
             </tr>
         `;
