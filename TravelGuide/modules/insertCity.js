@@ -19,14 +19,16 @@ async function insertCity(cityName, country, latitude, longitude, funThings, war
 async function updateCity(cityName_in, country_in, latitude_in, longitude_in, funThings_in, warnings_in, comments_in) { 
     try {
         const filter = { cityName: cityName_in };
-        let result = await City.find(filter);
+        let result = await City.findOne(filter);
         if (result) {
-            let { cityName, country, latitude, longitude, funThings, warnings, comments } = result;
-            funThings += "\n" + funThings_in;
-            warnings += "\n" + warnings_in;
-            comments += "\n" + comments_in;
-
-            const update = { funThings: funThings, warnings: warnings, comments: comments };
+            const update = { 
+                funThings: result.funThings ? `${result.funThings}\n${funThings_in}` : funThings_in, 
+                warnings: result.warnings ? `${result.warnings}\n${warnings_in}` : warnings_in, 
+                comments: result.comments ?  `${result.comments}\n${comments_in}` : comments_in, 
+                country: country_in || result.country,
+                latitude: latitude_in || result.latitude,
+                longitude: longitude_in || result.longitude
+            };
             const options = { new:true };
            
             await City.findOneAndUpdate(filter, update, options);
