@@ -16,7 +16,7 @@ const mongoose = require("mongoose");
 const City = require("./model/City.js");
 
 // Include Mongo Functions
-const { insertCity } = require("./modules/insertCity.js");
+const { insertCity, updateCity } = require("./modules/insertCity.js");
 const { listCities } = require("./modules/listCities.js");
 const { findCity } = require("./modules/findCity.js");
 
@@ -56,7 +56,10 @@ app.get("/addCity", (request, response) => {
     and use mongoose to add it to DB */
 app.post("/addProcess", async (request, response) => { 
     const { cityName, country, latitude, longitude, funThings, warnings, comments} = request.body; 
-    await insertCity(cityName, country, latitude, longitude, funThings, warnings, comments); 
+    // Try to update the content - if the find for city fails then we return false and go to insert
+    if (!(await updateCity(cityName, country, latitude, longitude, funThings, warnings, comments))) {
+        await insertCity(cityName, country, latitude, longitude, funThings, warnings, comments); 
+    }
     response.render('addCityConfirmation', { cityName, country, latitiude, longitude, funThings, warnings, comments });  
 });
 
