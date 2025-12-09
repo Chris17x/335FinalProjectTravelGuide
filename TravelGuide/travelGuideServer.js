@@ -12,7 +12,7 @@ require("dotenv").config({
 });
 const mongoose = require("mongoose");
 
-// Include the City schema
+// Include the City schema -- may not be needed now since things moved around
 const City = require("./model/City.js");
 
 // Include Mongo Functions
@@ -122,8 +122,16 @@ process.stdin.on('readable', () => {
 	while ((dataInput = process.stdin.read()) !== null) {
 		const command = dataInput.toString().trim();
 		if (command === "stop") {
-			process.stdout.write("Shutting down the server"); 
-            process.exit(0); 
+            process.stdout.write("Disconnecting from database.\n"); 
+            mongoose.disconnect()
+            .then(()=> {
+                process.stdout.write("Shutting down the server"); 
+                process.exit(0);
+            })
+            .catch((err) => {
+                console.error("Error during disconnection:", err);
+                console.exit(1);
+            })
         }  else {
 			console.log(`Invalid command: ${command}`);
             process.stdout.write('Stop to shutdown the server: ');
@@ -133,7 +141,12 @@ process.stdin.on('readable', () => {
 });
 
 /* Start the server */
-app.listen(portNumber, () => {
-    console.log(`Web server started and running at http://localhost:${portNumber}`);
-    process.stdout.write('Stop to shutdown the server: ');
-});
+mongoose.connect(process.env.MONGO_CONNECTION_STRING)
+.then(() => {
+    console.log("Database connection secured.");
+    app.listen(portNumber, () => {
+        console.log(`Web server started and running at http://localhost:${portNumber}`);
+        process.stdout.write('Stop to shutdown the server: ');
+    });
+})
+.catch((err) => console.error(err))

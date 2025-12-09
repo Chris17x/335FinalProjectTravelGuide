@@ -1,6 +1,7 @@
+const City = require("../model/City.js");
+
 async function insertCity(cityName, country, latitude, longitude, funThings, warnings, comments) { 
     try {
-        await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
         await City.create({
             cityName: cityName,
             country: country,
@@ -12,14 +13,11 @@ async function insertCity(cityName, country, latitude, longitude, funThings, war
         });
     } catch (err) {
         console.error(err);
-    } finally {
-        await mongoose.disconnect(); 
-    }
+    } 
 }
 
 async function updateCity(cityName_in, country_in, latitude_in, longitude_in, funThings_in, warnings_in, comments_in) { 
     try {
-        await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
         const filter = { cityName: cityName_in };
         let result = await City.find(filter);
         if (result) {
@@ -38,8 +36,6 @@ async function updateCity(cityName_in, country_in, latitude_in, longitude_in, fu
         
     } catch (err) {
         console.error(err);
-    } finally {
-        await mongoose.disconnect(); 
     }
 }
 
