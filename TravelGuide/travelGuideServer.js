@@ -118,7 +118,7 @@ app.post("/infoProcess", async (request, response) => {
     try {
         const result = await findCity(cityName);
 
-        if (result && result.length > 0) {
+        if (result?.length > 0) {
             const target = result[0];
 
             const imageUrl = await fetchImage(target.cityName);
