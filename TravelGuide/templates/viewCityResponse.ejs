@@ -9,7 +9,7 @@
 <body>
     <h1>City Information</h1>
 
-    <p>
+    <!-- <p>
         <strong>City Name:</strong> <%= target.cityName %>
     </p>
     <p>
@@ -20,7 +20,14 @@
     </p>
     <p>
         <strong>Weather:</strong> <%= weatherReport %>
-    </p>
+    </p> -->
+
+    <h2>City Image</h2>
+    <% if (imageUrl) { %>
+        <img src="<%= imageUrl %>" alt="Image of <%= target.cityName %>" class="city-image">
+    <% } else { %>
+        <p><em>No image available for this city.</em></p>
+    <% } %>
 
     <p>
         <a href="/">Home</a>

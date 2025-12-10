@@ -1,6 +1,6 @@
 /* Imports */
 const express = require("express");
-const portNumber = 7000;
+const portNumber = 7001;
 const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -104,14 +104,31 @@ app.get("/cityInfo", (request, response) => {
     using mongoose, including an API call and displaying
     that information with the template using template vars*/
 app.post("/infoProcess", async (request, response) => { 
-    const { cityName } = request.body; 
-    const result = await findCity(cityName);
-    if (result.length > 0) {
-        const target = result[0];
-        const weatherReport = 2; 
-        response.render('viewCityResponse', { target, weatherReport });
-    } else {
-        response.render('viewCityResponseFailed', { cityName });
+    // const { cityName } = request.body; 
+    // const result = await findCity(cityName);
+    // if (result.length > 0) {
+    //     const target = result[0];
+    //     const weatherReport = 2; 
+    //     response.render('viewCityResponse', { target, weatherReport });
+    // } else {
+    //     response.render('viewCityResponseFailed', { cityName });
+    // }
+
+    const { cityName } = request.body;
+    try {
+        const result = await findCity(cityName)
+
+        if (result & result.length > 0) {
+            const target = result[0];
+
+            const imageUrl = await fetchImage(target.cityName);
+            response.render("viewCityResponse", { target, imageUrl });
+        } else {
+            response.render("viewCityResponseFailed", { cityName });
+        }
+    } catch (err) {
+        console.error(err);
+        response.render("viewCityResponseFailed", { cityName });
     }
 });
 
