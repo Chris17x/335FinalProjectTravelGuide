@@ -21,7 +21,7 @@ const { listCities } = require("./modules/listCities.js");
 const { findCity } = require("./modules/findCity.js");
 
 // Include API function
-const { fetchWeather } = require("./modules/fetchWeather.js");
+const { fetchImage } = require("./modules/fetchImage.js");
 
 
 /* Setup some of the tools -- WILL NEED MORE*/
