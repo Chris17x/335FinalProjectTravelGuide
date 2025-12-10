@@ -9,12 +9,43 @@
 <body>
     <h1>City Information</h1>
 
+    <p>
+        The city you searched for was found in the database. Below is the travel guide information along with an image!
+    </p>
+
     <h2>City Image</h2>
     <% if (imageUrl) { %>
         <img src="<%= imageUrl %>" alt="Image of <%= target.cityName %>" class="city-image">
     <% } else { %>
         <p><em>No image available for this city.</em></p>
     <% } %>
+
+    <h2>Details</h2>
+    <p>
+        <strong>City Name:</strong> <%= target.cityName %> <br>
+        <strong>Country:</strong> <%= target.country %> <br>
+        <strong>Latitude:</strong> <%= target.latitude %> <br>
+        <strong>Longitude:</strong> <%= target.longitude %> <br>
+    </p>
+    <hr>
+
+    <h2>What to See</h2>
+    <p>
+        <%= target.funThings %>
+    </p>
+    <hr>
+
+    <h2>What to Avoid</h2>
+    <p>
+        <%= target.warnings %>
+    </p>
+
+    <h2>Additional Comments</h2>
+    <p>
+        <%= target.comments %>
+    </p>
+    <hr>
+
 
     <p>
         <a href="/">Home</a>
