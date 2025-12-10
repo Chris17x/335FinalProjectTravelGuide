@@ -116,18 +116,18 @@ app.post("/infoProcess", async (request, response) => {
 
     const { cityName } = request.body;
     try {
-        const result = await findCity(cityName)
+        const result = await findCity(cityName);
 
-        if (result & result.length > 0) {
+        if (result && result.length > 0) {
             const target = result[0];
 
             const imageUrl = await fetchImage(target.cityName);
+
             response.render("viewCityResponse", { target, imageUrl });
         } else {
             response.render("viewCityResponseFailed", { cityName });
         }
     } catch (err) {
-        console.error(err);
         response.render("viewCityResponseFailed", { cityName });
     }
 });

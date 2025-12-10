@@ -16,7 +16,7 @@ async function fetchImage(cityName) {
         if (data.thumbnail && data.thumbnail.source) {
             return data.thumbnail.source;
         } else {
-            // no thumbnail available for this page
+            // no thumbnail available
             return null;
         }
     } catch (err) {
