@@ -7,24 +7,32 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1>View City</h1>
-    <p>
-        Use this page to view a city that was added and a corresponding image, its latitude and longitude, what to see, what to avoid, and additional comments.
-    </p>
+    <header>
+        <h1>View City</h1>
+        <p>
+            Use this page to view a city that was added and a corresponding image, its latitude and longitude, what to see, what to avoid, and additional comments.
+        </p>
+        <nav>
+        <a href="/">Home</a>
+        <a href="/cityList">View All Cities</a>
+        </nav>
+        <hr>
+    </header>
 
     <form method="post" action="/infoProcess">
-        <p>
-            <strong>City Name: </strong>
+        <fieldset>
+            <legend>City Information</legend>
+            <label for="cityName">City Name:</label><br>
             <input id="cityName" type="text" name="cityName" required>
-        </p>
+        </fieldset>
         <p>
-            <button type="reset">Reset</button>
-        <button type="submit">Submit Request</button>
+            <button type="reset">Clear Form</button>
+        <button type="submit">Submit City</button>
         </p>
     </form>
 
     <p>
-        <a href="/">Home</a>
+        <a href="/">Back to Home</a>
     </p>
 </body>
 </html>
