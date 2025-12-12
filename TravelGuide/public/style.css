@@ -17,3 +17,19 @@ table {
 th, td {
     border: 2px black;
 }
+
+.background-image {
+    background-image: url("/image/img.avif");
+    background-size: cover;
+    background-position: center;
+}
+
+.page-box {
+    font-family: "Ubuntu", Helvetica, sans-serif;
+	font-size: 110%;
+    background-color: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(6px);
+    max-width: fit-content;
+    margin: 40px auto;
+    padding: 30px;
+}
