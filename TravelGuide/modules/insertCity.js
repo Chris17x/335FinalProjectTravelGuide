@@ -3,7 +3,7 @@ const City = require("../model/City.js");
 async function insertCity(cityName, country, latitude, longitude, funThings, warnings, comments) { 
     try {
         await City.create({
-            cityName: cityName,
+            cityName: cityName.trim(),
             country: country,
             latitude: latitude,
             longitude: longitude,
@@ -18,7 +18,7 @@ async function insertCity(cityName, country, latitude, longitude, funThings, war
 
 async function updateCity(cityName_in, country_in, latitude_in, longitude_in, funThings_in, warnings_in, comments_in) { 
     try {
-        const filter = { cityName: cityName_in };
+        const filter = { cityName: cityName_in.trim() };
         let result = await City.findOne(filter);
         if (result) {
             const update = { 
